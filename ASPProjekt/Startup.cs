@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ASPProjekt.Models;
 
 namespace ASPProjekt
 {
@@ -24,6 +26,9 @@ namespace ASPProjekt
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration["Data:Products:ConnectionString"]));
+            services.AddTransient<IPostRepository, EFProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

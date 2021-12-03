@@ -1,63 +1,58 @@
 ﻿using ASPProjekt.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ASPProjekt.Controllers
 {
     public class PostController : Controller
     {
-        static List<Post> post = new List<Post>();
-        private static int index = 0;
-        public IActionResult Index()
+        private ICRUDPostRepository posts;
+        
+
+        public PostController(ICRUDPostRepository posts)
         {
-            return View(post);
+            this.posts = posts;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult AddForm()
         {
             return View();
-            
         }
         [HttpPost]
 
         public IActionResult Add(Post Post)
         {
-
-
             if (ModelState.IsValid)
             {
-                index++;
-                Post.Id = index;
-                post.Add(Post);
-                return View("ConfirmBook", Post);
+                
+                Post = posts.Add(Post);
+                return View("ConfirmPost", Post);
             }
-            else
-                return View("AddForm");
-
+            return View();
         }
-
-        public IActionResult List()
+        public IActionResult Delete(int id)
         {
-            return View(post);
+            posts.Delete(id);
+            return View("List", posts.FindAll());
         }
-
         public IActionResult EditForm(int id)
         {
-            return View(FindPost(id));
+            return View(posts.FindById(id));
         }
-        [HttpPost]
+        public IActionResult List()
+        {
+            return View(posts);
+        }
         public IActionResult Edit(Post editedPost)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                Post originalPost = FindPost(editedPost.Id);
+                Post originalPost = posts.FindById(editedPost.Id);
                 originalPost.Title = editedPost.Title;
-                return View("List", post);
+                return View("List", posts);
             }
             else
             {
@@ -66,24 +61,10 @@ namespace ASPProjekt.Controllers
         }
         public IActionResult DeleteConfirm(int id)
         {
-            return View(FindPost(id));
+            return View(posts.FindById(id));
         }
-        public IActionResult Delete(int id)
-        {
-            post.Remove(FindPost(id));
-            return View("List", post);
-        }
-
-        public Post FindPost(int id)
-        {
-            foreach(var post in post)
-            {
-                if (post.Id == id)
-                {
-                    return post;
-                }
-            }
-            throw new Exception("Taki Post Nie Istnieje");
-        }
+        
+        
     }
 }
+  
