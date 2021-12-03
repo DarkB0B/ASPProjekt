@@ -8,7 +8,7 @@ namespace ASPProjekt.Models
 {
     public class Post
     {
-        [Required(ErrorMessage ="Musisz Podać Tytuł Posta")]
+        [Required(ErrorMessage = "Musisz podać tytuł książki!")]
         [MinLength(2)]
         public string Title { get; set; }
         public DateTime DateOfAdd { get; set; }
@@ -16,3 +16,4 @@ namespace ASPProjekt.Models
         public int Id { get; set; }
     }
 }
+

@@ -1,0 +1,10 @@
+﻿@model ICollection<ASPProjekt.Models.Post>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Książki</h1>
+<h3>Liczba książek: @Model.Count</h3>
+<a asp-action="AddForm" asp-controller="Post">Dodaj nowy post</a>
+<div><a asp-action="List" asp-controller="Post">Lista Postów</a></div>

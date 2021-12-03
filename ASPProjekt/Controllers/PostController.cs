@@ -11,11 +11,11 @@ namespace ASPProjekt.Controllers
 {
     public class PostController : Controller
     {
-        static List<Post> posts = new List<Post>();
+        static List<Post> post = new List<Post>();
         private static int index = 0;
         public IActionResult Index()
         {
-            return View(posts);
+            return View(post);
         }
 
         public IActionResult AddForm()
@@ -27,23 +27,23 @@ namespace ASPProjekt.Controllers
 
         public IActionResult Add(Post Post)
         {
+
+
             if (ModelState.IsValid)
             {
                 index++;
                 Post.Id = index;
-                posts.Add(Post);
-                Post.DateOfAdd = DateTime.Now;
-                return View("ConfirmPost");
+                post.Add(Post);
+                return View("ConfirmBook", Post);
             }
             else
-            {
-                return View("AddPost");
-            }
+                return View("AddForm");
+
         }
 
         public IActionResult List()
         {
-            return View(posts);
+            return View(post);
         }
 
         public IActionResult EditForm(int id)
@@ -57,11 +57,11 @@ namespace ASPProjekt.Controllers
             {
                 Post originalPost = FindPost(editedPost.Id);
                 originalPost.Title = editedPost.Title;
-                return View("List", posts);
+                return View("List", post);
             }
             else
             {
-                return View("EditPost");
+                return View("EditForm");
             }
         }
         public IActionResult DeleteConfirm(int id)
@@ -70,13 +70,13 @@ namespace ASPProjekt.Controllers
         }
         public IActionResult Delete(int id)
         {
-            posts.Remove(FindPost(id));
-            return View("List", posts);
+            post.Remove(FindPost(id));
+            return View("List", post);
         }
 
         public Post FindPost(int id)
         {
-            foreach(var post in posts)
+            foreach(var post in post)
             {
                 if (post.Id == id)
                 {
