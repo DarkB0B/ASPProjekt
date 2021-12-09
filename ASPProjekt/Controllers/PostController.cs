@@ -25,13 +25,13 @@ namespace ASPProjekt.Controllers
 
         public IActionResult Add(Post Post)
         {
-            if (ModelState.IsValid)
-            {
+          //  if (ModelState.IsValid)
+          //  {
                 
                 Post = posts.Add(Post);
                 return View("ConfirmPost", Post);
-            }
-            return View();
+         //   }
+         //   return View();
         }
         public IActionResult Delete(int id)
         {

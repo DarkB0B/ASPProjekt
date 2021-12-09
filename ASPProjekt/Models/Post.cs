@@ -9,8 +9,7 @@ namespace ASPProjekt.Models
 {
     public class Post
     {   
-        [Required(ErrorMessage = "Musisz podać tytuł!")]
-        [MinLength(2)]
+        
         public string Title { get; set; }
         public DateTime DateOfAdd { get; set; }
         [HiddenInput]
