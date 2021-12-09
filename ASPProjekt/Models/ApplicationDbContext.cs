@@ -14,10 +14,10 @@ namespace ASPProjekt.Models
         }
         public DbSet<Post> Posts { get; set; }
     }
-    public class EFAchievementRepository : IPostRepository
+    public class EFPostRepository : IPostRepository
     {
         private ApplicationDbContext _applicationDbContext;
-        public EFAchievementRepository(ApplicationDbContext applicationDbContext)
+        public EFPostRepository(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }

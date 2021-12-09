@@ -27,9 +27,9 @@ namespace ASPProjekt
         {
             
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["Data:Products:ConnectionString"]));
-            services.AddTransient<IPostRepository, EFProductRepository>();
-            services.AddTransient<ICRUDPostRepository, EFCRUDEPostRepository>();
+            options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
+            services.AddTransient<IPostRepository, EFPostRepository>();
+            services.AddTransient<ICRUDPostRepository, EFCRUDPostRepository>();
             services.AddControllersWithViews();
         }
 
