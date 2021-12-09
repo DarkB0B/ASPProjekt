@@ -8,7 +8,7 @@
     <form asp-action="Add" asp-controller="Post" method="post">
         <div class="mb-3">
             <span asp-validation-for="Title"></span>
-            <input class="form-control" form="Title" />
+            <input asp-for="Title" />
         </div>
         <div class="mb-3">
             <button class="btn-primary" type="submit">Zapisz</button>

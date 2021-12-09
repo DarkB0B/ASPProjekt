@@ -1,5 +1,6 @@
 ﻿using ASPProjekt.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ASPProjekt.Controllers
 {
@@ -7,6 +8,7 @@ namespace ASPProjekt.Controllers
     {
         private ICRUDPostRepository posts;
         
+
 
         public PostController(ICRUDPostRepository posts)
         {
@@ -23,13 +25,14 @@ namespace ASPProjekt.Controllers
         }
         [HttpPost]
 
-        public IActionResult Add(Post Post)
+        public IActionResult Add(Post post)
         {
+            DateTime datenow = DateTime.Now;
           //  if (ModelState.IsValid)
           //  {
-                
-                Post = posts.Add(Post);
-                return View("ConfirmPost", Post);
+                post.DateOfAdd = datenow;
+                post = posts.Add(post);
+                return View("ConfirmPost", post);
          //   }
          //   return View();
         }
