@@ -11,6 +11,7 @@ namespace ASPProjekt.Models
     {   
         
         public string Title { get; set; }
+        public ICollection<Author> Authors { get; set; }
         public DateTime DateOfAdd { get; set; }
         [HiddenInput]
         public int Id { get; set; }

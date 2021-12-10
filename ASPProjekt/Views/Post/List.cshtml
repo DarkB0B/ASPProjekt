@@ -1,5 +1,4 @@
-﻿@model IQueryable<Post>
-
+﻿
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -24,7 +23,10 @@
         <tr>
             <td>
                 @post.Title
-            </td>           
+            </td>
+            <td>
+                
+            </td>
             <td>
                 <a asp-controller="Post" asp-action="EditForm" asp-route-id="@post.Id">Edytuj</a>
                 <a asp-controller="Post" asp-action="DeleteConfirm" asp-route-id="@post.Id">Usuń</a>
