@@ -16,6 +16,10 @@ namespace ASPProjekt.Models
 
         IList<Post> FindPage(int page, int size);
 
+        void AddPostToAuthor(int authorId, int postId);
+
+        
+
     }
 
     public class EFCRUDPostRepository : ICRUDPostRepository
@@ -65,6 +69,14 @@ namespace ASPProjekt.Models
             Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post> entityEntry = context.Posts.Update(post);
             context.SaveChanges();
             return entityEntry.Entity;
+        }
+
+        public void AddPostToAuthor(int authorId, int postId)
+        {
+            var author = context.Authors.Find(authorId);
+            var post = context.Posts.Find(postId);
+            author.Posts.Add(post);
+            Update(post);
         }
     }
 }

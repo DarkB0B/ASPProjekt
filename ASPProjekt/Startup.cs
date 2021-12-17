@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ASPProjekt.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASPProjekt
 {
@@ -25,7 +26,15 @@ namespace ASPProjekt
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddControllersWithViews();
+
+            services.AddDbContext<AppIdentityDbContext>(options =>
+            options.UseSqlServer(
+            Configuration["Data:AppIdentity:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
+            .AddDefaultTokenProviders();
+
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
             services.AddTransient<IPostRepository, EFPostRepository>();
@@ -36,6 +45,7 @@ namespace ASPProjekt
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+ 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -48,9 +58,9 @@ namespace ASPProjekt
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -60,5 +70,6 @@ namespace ASPProjekt
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
     }
 }

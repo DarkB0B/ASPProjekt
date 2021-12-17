@@ -13,7 +13,7 @@ namespace ASPProjekt.Models
         {
         }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Author> Authors { get; set}
+        public DbSet<Author> Authors { get; set; }
     }
     public class EFPostRepository : IPostRepository
     {
@@ -23,7 +23,7 @@ namespace ASPProjekt.Models
             _applicationDbContext = applicationDbContext;
         }
         public IQueryable<Post> Posts => _applicationDbContext.Posts;
-        public IQueryable<Autrhor> Authors => _applicationDbContext.Authors;
+        
         
     }
 }

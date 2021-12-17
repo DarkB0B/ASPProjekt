@@ -6,6 +6,6 @@ namespace ASPProjekt.Models
 {
     public interface IPostRepository
     {
-        IQueryable<Post> Posts { get; }
+        IQueryable<Post> Posts { get;  }
     }
 }

@@ -7,8 +7,8 @@ namespace ASPProjekt.Controllers
     public class PostController : Controller
     {
         private ICRUDPostRepository posts;
-        
 
+        
 
         public PostController(ICRUDPostRepository posts)
         {
@@ -41,6 +41,7 @@ namespace ASPProjekt.Controllers
             posts.Delete(id);
             return View("List", posts.FindAll());
         }
+        
         public IActionResult EditForm(int id)
         {
             return View(posts.FindById(id));
@@ -66,7 +67,11 @@ namespace ASPProjekt.Controllers
         {
             return View(posts.FindById(id));
         }
-        
+        public IActionResult AddPostToAuthor(int postId, int authorId)
+        {
+            AddPostToAuthor(postId, authorId);
+            return View();
+        }
         
     }
 }
