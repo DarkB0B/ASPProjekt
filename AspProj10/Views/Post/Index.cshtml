@@ -1,0 +1,8 @@
+﻿@model ICollection<AspProj10.Models.Post>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<a asp-action="AddPost" asp-controller="Post">Dodaj nowy post</a>
+<div><a asp-action="List" asp-controller="Post">Lista Postów</a></div>

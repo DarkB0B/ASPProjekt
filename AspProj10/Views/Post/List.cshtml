@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Post>
+
+
+<h1>Lista książek</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tytuł:
+            </th>
+            
+            <th>
+                Data publikacji:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in @Model)
+        {
+        <tr>
+            <td>
+                @post.Title
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Edytuj</a>
+                <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id">Usuń</a>
+                <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">Szczegóły</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table> 
