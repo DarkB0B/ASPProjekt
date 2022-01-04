@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AspProj10.Models
@@ -48,9 +49,9 @@ namespace AspProj10.Models
         }
         public Post Update(Post post)
         {
-            var entity = _context.Posts.Update(post).Entity;
+            EntityEntry<Post> entity = _context.Posts.Update(post);
             _context.SaveChanges();
-            return entity;
+            return entity.Entity;
         }
         public IList<Post> FindAll()
         {

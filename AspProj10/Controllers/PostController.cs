@@ -61,9 +61,8 @@ namespace AspProj10.Controllers
         {
             if (ModelState.IsValid)
             {
-                Post originalPost = postRepository.FindById(editedPost.Id);
-                originalPost.Title = editedPost.Title;
-                return View("List", postRepository);
+                postRepository.Update(editedPost);
+                return View("List", postRepository.FindAll());
             }
             else
             {
