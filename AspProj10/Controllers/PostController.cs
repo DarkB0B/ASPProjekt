@@ -11,11 +11,18 @@ namespace AspProj10.Controllers
     {
         
         private ICrudPostRepository postRepository;
-        public PostController(ICrudPostRepository postRepository)
+        private ICrudCategoryRepository categoryRepository;
+        public PostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository)
         {
             this.postRepository = postRepository;
+            this.categoryRepository = categoryRepository;
         }
         
+        // Post{
+        public IActionResult Details()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
@@ -28,21 +35,28 @@ namespace AspProj10.Controllers
         {          
             return View("List", postRepository.FindAll());
         }
-        [HttpPost]
-        public IActionResult Add(Post post)
+        public IActionResult Like(Post post)
         {
+            post.LikeAmmount += 1;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddP(Post post)
+        {   
+            
             DateTime datenow = DateTime.Now;
-           //   if (ModelState.IsValid)
-          //   {
+            //   if (ModelState.IsValid)
+            //   {
+            post.LikeAmmount = 0;
             post.DateOfAdd = datenow;
             postRepository.Add(post);
             return View("ConfirmPost", post);
            //    }
             //   return View();
         }
-        public IActionResult Delete(int id)
+        public IActionResult DeleteP(int id)
         {
-            if (id > 0 & id != null) 
+            if (id > 0) 
             { 
             postRepository.Delete(id);
             return View("List", postRepository.FindAll());
@@ -53,11 +67,15 @@ namespace AspProj10.Controllers
             }
         
         }
+        public IActionResult DeletePost(int id)
+        {
+            return View(postRepository.FindById(id));
+        }
         public IActionResult EditPost(int id)
         {
             return View(postRepository.FindById(id));
         }
-        public IActionResult Edit(Post editedPost)
+        public IActionResult EditP(Post editedPost)
         {
             if (ModelState.IsValid)
             {
@@ -66,12 +84,44 @@ namespace AspProj10.Controllers
             }
             else
             {
-                return View("EditForm");
+                return View("EditPost");
             }
         }
-        public IActionResult DeleteConfirm(int id)
+        
+        // } Post
+
+        // Category{ 
+
+        public IActionResult AddCategory()
         {
-            return View(postRepository.FindById(id));
+            return View();
         }
+        [HttpPost]
+        public IActionResult AddC(Category category)
+        {
+            DateTime datenow = DateTime.Now;
+            //   if (ModelState.IsValid)
+            //   {
+            
+            
+            categoryRepository.Add(category);
+            return View("ConfirmCategory", category);
+            //    }
+            //   return View();
+        }
+        public IActionResult DeleteC(int id)
+        {
+            if (id > 0)
+            {
+                categoryRepository.Delete(id);
+                return View("List", categoryRepository.FindAll());
+            }
+            else
+            {
+                return View("List");
+            }
+
+        }
+        // } Category
     }
 }

@@ -33,13 +33,13 @@ namespace AspProj10.Models
         }
         public void Delete(int id)
         {
-            
-            
-                var post = _context.Posts.Remove(Find(id)).Entity;
-                _context.SaveChanges();
-            
-           
-            
+
+
+            var post = _context.Posts.Remove(Find(id)).Entity;
+            _context.SaveChanges();
+
+
+
         }
         public Post Add(Post post)
         {

@@ -4,11 +4,15 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-controller="Post" method="post">
+        <form asp-action="EditP" asp-controller="Post" method="post">
             <div  class="text-danger"></div>
             
              <input asp-for="Id" class="form-control" type="hidden" />
              <input asp-for="DateOfAdd" class="form-control" type="hidden" />
+             <input asp-for="LikeAmmount" class="form-control" type="hidden" />
+             <input asp-for="Category" class="form-control" type="hidden" />
+             <input asp-for="Comments" class="form-control" type="hidden" />
+             <input asp-for="CategoryId" class="form-control" type="hidden" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />

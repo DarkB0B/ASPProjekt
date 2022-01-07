@@ -34,6 +34,9 @@ namespace AspProj10
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
             services.AddTransient<ICrudPostRepository, EFCrudPostRepository>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+             options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
+            services.AddTransient<ICrudCategoryRepository, EFCrudCategoryRepository>();
             services.AddControllersWithViews();
             services.AddMvc();
             services.AddMemoryCache();

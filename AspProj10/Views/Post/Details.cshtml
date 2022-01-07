@@ -4,12 +4,7 @@
     <h4>Post</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
+        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -34,3 +29,38 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
+<h1>Lista Komentarzy</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tytuł:
+            </th>
+            
+            <th>
+                Data publikacji:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comment in @Model.Comments)
+        {
+        <tr>
+            <td>
+                @comment.Commentt
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                <a asp-controller="Post" asp-action="EditComment asp-route-id="@comment.Id">Edytuj</a>
+                <a asp-controller="Post" asp-action="Deletec" asp-route-id="@comment.Id">Usuń</a>
+                <a asp-controller="Post" asp-action="Details" asp-route-id="@comment.Id">Szczegóły</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table> 
