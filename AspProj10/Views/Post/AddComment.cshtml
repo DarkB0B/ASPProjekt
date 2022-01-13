@@ -3,3 +3,35 @@
 *@
 @{
 }
+@model AspProj10.Models.Comment
+
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCo" asp-controller="Post" method="Post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Commentt" class="control-label"></label>
+                <input asp-for="Commentt" class="form-control" />
+                <span asp-validation-for="Commentt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostId" class="control-label"></label>
+                <input asp-for="PostId" class="form-control" />
+                <span asp-validation-for="PostId" class="text-danger"></span>
+            </div>
+           
+            
+            <div class="form-group">
+               <button class="btn-primary" type="submit">Zapisz</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

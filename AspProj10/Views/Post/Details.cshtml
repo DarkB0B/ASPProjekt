@@ -1,43 +1,36 @@
 ﻿@model ViewModel
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="row">
+<div class="text-center">
+    
+    
+    <div class="text-uppercase">
+      
+        <h1>@Model.post.Title </h1>
+   </div>
+    <div>
+       @Model.post.Description
+    </div>
+    <div class="text-lg-left">
+       Polubienia: @Model.post.LikeAmmount  
+       <div class="text-lg-left">   
+       <a asp-controller="Post" asp-action="Like" asp-route-id="@Model.post.Id">Like</a>
 
-        @foreach (Post post in Model.Posts)
-    {
-        <dt class = "col-sm-2">
-            post.Title
-        </dt>       
-        <dt class = "col-sm-2">
-            post.Description)
-        </dt>       
-        <dt class = "col-sm-2">
-            post.DateOfAdd)
-        </dt>
         
-    }
-        
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    </div>
+    </div>
+    
+           
 </div>
 
 
 
-<h1>Lista Komentarzy</h1>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                Tytuł:
+                Komentarze:
             </th>
-
-            <th>
-                Data publikacji:
-            </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -48,10 +41,8 @@
 
         </tr>
     }
-            <td>
-
-            </td>
-        </tr>
-        }
+            
+        
+        
     </tbody>
 </table>

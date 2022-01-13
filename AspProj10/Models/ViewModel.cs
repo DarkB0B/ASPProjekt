@@ -4,7 +4,7 @@ namespace AspProj10.Models
 {
     public class ViewModel
     {
-        public IEnumerable<Post> Posts { get; set; }
-        public IEnumerable<Comment> Comments { get; set; }
+        public Post post { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

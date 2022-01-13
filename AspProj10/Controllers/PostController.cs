@@ -21,11 +21,12 @@ namespace AspProj10.Controllers
         }
         
         // Post{
-        public IActionResult Details()
+        public IActionResult Details(int id)
         {
             ViewModel model = new ViewModel();
-            
-            return View(model);
+            model.post = postRepository.FindById(id);
+            model.Comments = (List<Comment>)commentRepository.FindAll();
+            return View(model) ;
         }
         public IActionResult Index()
         {
@@ -39,10 +40,19 @@ namespace AspProj10.Controllers
         {          
             return View("List", postRepository.FindAll());
         }
-        public IActionResult Like(Post post)
+        public IActionResult Like(int id)
         {
-            post.LikeAmmount += 1;
-            return View();
+            if (id > 0)
+            {
+                postRepository.Like(id);
+                //  Post post = postRepository.FindById(id);
+                //  post.LikeAmmount += 1;
+                return View("Details", postRepository.FindById(id)) ;
+            }
+            else
+            {
+                return View("Details", postRepository.FindById(id));
+            }
         }
         [HttpPost]
         public IActionResult AddP(Post post)
@@ -143,15 +153,15 @@ namespace AspProj10.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddCo(Category category)
+        public IActionResult AddCo(Comment comment)
         {
-            DateTime datenow = DateTime.Now;
+            
             //   if (ModelState.IsValid)
             //   {
 
 
-            categoryRepository.Add(category);
-            return View("ConfirmCategory", category);
+            commentRepository.Add(comment);
+            return View("Index");
             //    }
             //   return View();
         }

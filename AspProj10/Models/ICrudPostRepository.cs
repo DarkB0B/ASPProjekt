@@ -14,7 +14,7 @@ namespace AspProj10.Models
 
         Post FindById(int id);
 
-
+        void Like(int id);
 
         IList<Post> FindAll();
 
@@ -27,9 +27,16 @@ namespace AspProj10.Models
         {
             _context = context;
         }
+        
         public Post Find(int id)
         {
             return _context.Posts.Find(id);
+        }
+        public void Like(int id)
+        {
+            var post = _context.Posts.Find(id);
+            post.LikeAmmount += 1;
+            _context.SaveChanges();
         }
         public void Delete(int id)
         {
