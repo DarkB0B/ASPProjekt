@@ -1,6 +1,7 @@
 ﻿@model AspProj10.Models.Post
 
 
+
 <h4>Post</h4>
 <hr />
 <div class="row">
@@ -18,15 +19,45 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
             
+
+
+          <div class="btn-btn-group">  
+
+                Muzyka: <input checked="checked" 
+                id="CategoryId" 
+                name="CategoryId" 
+                type="radio" 
+                value="1" />
+
+                Filmy: <input 
+                id="CategoryId" 
+                name="CategoryId" 
+                type="radio" 
+                value="2" />
+
+                Gry: <input 
+                id="CategoryId" 
+                name="CategoryId" 
+                type="radio" 
+                value="3" />
+
+                Sztuka: <input 
+                id="CategoryId" 
+                name="CategoryId" 
+                type="radio" 
+                value="4" />
+
+                Sport: <input 
+                id="CategoryId" 
+                name="CategoryId" 
+                type="radio" 
+                value="5" />
+           
+            </div>
             <div class="form-group">
                <button class="btn-primary" type="submit">Zapisz</button>
-            </div>
+               </div>
         </form>
     </div>
 </div>

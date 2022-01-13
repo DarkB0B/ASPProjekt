@@ -1,28 +1,23 @@
-﻿@model AspProj10.Models.Post
-
+﻿@model ViewModel
 <div>
     <h4>Post</h4>
     <hr />
     <dl class="row">
+
+        @foreach (Post post in Model.Posts)
+    {
+        <dt class = "col-sm-2">
+            post.Title
+        </dt>       
+        <dt class = "col-sm-2">
+            post.Description)
+        </dt>       
+        <dt class = "col-sm-2">
+            post.DateOfAdd)
+        </dt>
         
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfAdd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateOfAdd)
-        </dd>
+    }
+        
     </dl>
 </div>
 <div>
@@ -39,28 +34,24 @@
             <th>
                 Tytuł:
             </th>
-            
+
             <th>
                 Data publikacji:
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var comment in @Model.Comments)
-        {
+       @foreach (Comment comment in Model.Comments)
+    {
         <tr>
+            <td>@comment.Commentt</td>
+
+        </tr>
+    }
             <td>
-                @comment.Commentt
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                <a asp-controller="Post" asp-action="EditComment asp-route-id="@comment.Id">Edytuj</a>
-                <a asp-controller="Post" asp-action="Deletec" asp-route-id="@comment.Id">Usuń</a>
-                <a asp-controller="Post" asp-action="Details" asp-route-id="@comment.Id">Szczegóły</a>
+
             </td>
         </tr>
         }
     </tbody>
-</table> 
+</table>

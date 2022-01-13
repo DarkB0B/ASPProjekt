@@ -12,16 +12,20 @@ namespace AspProj10.Controllers
         
         private ICrudPostRepository postRepository;
         private ICrudCategoryRepository categoryRepository;
-        public PostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository)
+        private ICrudCommentRepository commentRepository;
+        public PostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository, ICrudCommentRepository commentRepository)
         {
             this.postRepository = postRepository;
             this.categoryRepository = categoryRepository;
+            this.commentRepository = commentRepository;
         }
         
         // Post{
         public IActionResult Details()
         {
-            return View();
+            ViewModel model = new ViewModel();
+            
+            return View(model);
         }
         public IActionResult Index()
         {
@@ -114,7 +118,49 @@ namespace AspProj10.Controllers
             if (id > 0)
             {
                 categoryRepository.Delete(id);
-                return View("List", categoryRepository.FindAll());
+                return View("CatList", categoryRepository.FindAll());
+            }
+            else
+            {
+                return View("CatList");
+            }
+
+        }
+
+        public IActionResult CategoryActions()
+        {
+            return View();
+        }
+        public IActionResult CatList()
+        {
+            return View("CatList", categoryRepository.FindAll());
+        }
+        // } Category
+        // Comment{
+
+        public IActionResult AddComment()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddCo(Category category)
+        {
+            DateTime datenow = DateTime.Now;
+            //   if (ModelState.IsValid)
+            //   {
+
+
+            categoryRepository.Add(category);
+            return View("ConfirmCategory", category);
+            //    }
+            //   return View();
+        }
+        public IActionResult DeleteCo(int id)
+        {
+            if (id > 0)
+            {
+                categoryRepository.Delete(id);
+                return View("List", commentRepository.FindAll());
             }
             else
             {
@@ -122,6 +168,9 @@ namespace AspProj10.Controllers
             }
 
         }
-        // } Category
+        
+
+        // } Comment
+
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AspProj10.Migrations
 {
-    public partial class m2 : Migration
+    public partial class aaaa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
