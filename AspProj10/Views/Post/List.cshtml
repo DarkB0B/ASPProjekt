@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Post>
 
 
-<h1>Lista książek</h1>
+<h1>Lista Postw</h1>
 <table class="table">
     <thead>
         <tr>
@@ -9,9 +9,7 @@
                 Tytuł:
             </th>
             
-            <th>
-                Data publikacji:
-            </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -21,9 +19,9 @@
             <td>
                 @post.Title
             </td>
-            <td>
-                
-            </td>
+            
+            
+            
             <td>
                 <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Edytuj</a>
                 <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@post.Id">Usuń</a>

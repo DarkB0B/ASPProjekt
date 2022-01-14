@@ -13,16 +13,15 @@
         <form asp-action="AddCo" asp-controller="Post" method="Post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
+             
+
             <div class="form-group">
                 <label asp-for="Commentt" class="control-label"></label>
                 <input asp-for="Commentt" class="form-control" />
+                <input asp-for="PostId"   class="form-control" value="@ViewBag.id" type="hidden" />  
                 <span asp-validation-for="Commentt" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PostId" class="control-label"></label>
-                <input asp-for="PostId" class="form-control" />
-                <span asp-validation-for="PostId" class="text-danger"></span>
-            </div>
+            
            
             
             <div class="form-group">

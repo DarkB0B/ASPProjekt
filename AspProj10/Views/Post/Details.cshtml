@@ -28,18 +28,26 @@
     <thead>
         <tr>
             <th>
-                Komentarze:
+                Komentarze: 
+            </th>
+            <th>
+            </th>
+            <th class="text-lg-ight">
+                <a asp-controller="Post" asp-action="AddComment" asp-route-id="@Model.post.Id">Dodaj Komentarz</a>
             </th>
             
         </tr>
     </thead>
     <tbody>
-       @foreach (Comment comment in Model.Comments)
+       @foreach (Comment comment in Model.Comments)     
     {
-        <tr>
-            <td>@comment.Commentt</td>
+            if (comment.PostId == @Model.post.Id) 
+            {
+                <tr>
+                    <td>@comment.Commentt</td>
 
         </tr>
+            }
     }
             
         

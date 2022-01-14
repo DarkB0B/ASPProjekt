@@ -26,6 +26,7 @@ namespace AspProj10.Controllers
             ViewModel model = new ViewModel();
             model.post = postRepository.FindById(id);
             model.Comments = (List<Comment>)commentRepository.FindAll();
+           // ViewBag.id = id;
             return View(model) ;
         }
         public IActionResult Index()
@@ -44,9 +45,7 @@ namespace AspProj10.Controllers
         {
             if (id > 0)
             {
-                postRepository.Like(id);
-                //  Post post = postRepository.FindById(id);
-                //  post.LikeAmmount += 1;
+                postRepository.Like(id);              
                 return View("Details", postRepository.FindById(id)) ;
             }
             else
@@ -148,17 +147,19 @@ namespace AspProj10.Controllers
         // } Category
         // Comment{
 
-        public IActionResult AddComment()
+        public IActionResult AddComment(int id)
         {
+            ViewBag.id = id;
             return View();
         }
         [HttpPost]
-        public IActionResult AddCo(Comment comment)
+        public IActionResult AddCo(Comment comment, int id)
         {
-            
+
+            //  comment.PostId = id;
             //   if (ModelState.IsValid)
             //   {
-
+            
 
             commentRepository.Add(comment);
             return View("Index");
