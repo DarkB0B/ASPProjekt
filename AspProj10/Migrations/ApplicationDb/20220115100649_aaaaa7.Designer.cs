@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AspProj10.Migrations
+namespace AspProj10.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220113024522_aaaa")]
-    partial class aaaa
+    [Migration("20220115100649_aaaaa7")]
+    partial class aaaaa7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

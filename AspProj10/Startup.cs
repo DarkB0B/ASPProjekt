@@ -41,6 +41,14 @@ namespace AspProj10
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
             services.AddTransient<ICrudCommentRepository, EFCrudCommentRepository>();
+            services.AddDbContext<AppIdentityDbContext>(options =>
+             options.UseSqlServer(Configuration["Data:AppIdentity:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
+            .AddDefaultTokenProviders();
+
+
+
             services.AddControllersWithViews();
             services.AddMvc();
             services.AddMemoryCache();
@@ -65,8 +73,12 @@ namespace AspProj10
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseSession();
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -74,6 +86,7 @@ namespace AspProj10
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

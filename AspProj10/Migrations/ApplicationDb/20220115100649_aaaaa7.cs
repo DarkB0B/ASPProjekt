@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AspProj10.Migrations
+namespace AspProj10.Migrations.ApplicationDb
 {
-    public partial class aaaa : Migration
+    public partial class aaaaa7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
