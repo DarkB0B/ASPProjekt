@@ -29,15 +29,15 @@ namespace AspProj10.Models
             {
                 _context = context;
             }
-            public Category Find(int id)
+            public Comment Find(int id)
             {
-                return _context.Categories.Find(id);
+                return _context.Comments.Find(id);
             }
             public void Delete(int id)
             {
 
 
-                var post = _context.Categories.Remove(Find(id)).Entity;
+                var post = _context.Comments.Remove(Find(id)).Entity;
                 _context.SaveChanges();
 
 

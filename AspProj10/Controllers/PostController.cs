@@ -170,12 +170,12 @@ namespace AspProj10.Controllers
         {
             if (id > 0)
             {
-                categoryRepository.Delete(id);
-                return View("List", commentRepository.FindAll());
+                commentRepository.Delete(id);
+                return View("List", postRepository.FindAll());
             }
             else
             {
-                return View("List");
+                return View("List", postRepository.FindAll());
             }
 
         }
