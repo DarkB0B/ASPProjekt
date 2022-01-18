@@ -1,33 +1,40 @@
 ﻿@model IEnumerable<Post>
 
 
-<h1>Lista Postw</h1>
+<h1>Lista Postów</h1>
 <table class="table">
     <thead>
         <tr>
             <th>
                 Tytuł:
             </th>
-            
-            
+            <th>
+                Kategoria:
+            </th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var post in @Model)
         {
-        <tr>
-            <td>
-                @post.Title
-            </td>
-            
-            
-            
-            <td>
-                <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Edytuj</a>
-                <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@post.Id">Usuń</a>
-                <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">Szczegóły</a>
-            </td>
-        </tr>
+
+            <tr>
+                <td>
+                    @post.Title
+                </td>
+                @{
+                    int x = post.CategoryId;
+                    Category cat = ViewBag.CR.FindById(x);                   
+                }        
+                <td>
+                  @cat.CategoryName
+                </td>
+                <td>
+                    <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Edytuj</a>
+                    <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@post.Id">Usuń</a>
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">Szczegóły</a>
+                </td>
+            </tr>
         }
     </tbody>
-</table> 
+</table>

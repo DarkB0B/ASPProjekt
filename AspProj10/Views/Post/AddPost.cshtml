@@ -2,67 +2,52 @@
 
 
 
-<h4>Post</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddP" asp-controller="Post" method="Post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="control-label"> <h2>Tytuł Posta </h2> </label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label"><h2>Opis</h2></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            
 
 
-          <div class="btn-btn-group">  
 
-                Muzyka: <input checked="checked" 
-                id="CategoryId" 
-                name="CategoryId" 
-                type="radio" 
-                value="1" />
+            <div class="btn-btn-group pt-4 pb-4">
+                <h2> Kategoria:</h2>
+                @{
+                    int x = 1;
+                    foreach (var cat in ViewBag.Kat)
+                    {
+                        <div>
+                            @cat.CategoryName
 
-                Filmy: <input 
-                id="CategoryId" 
-                name="CategoryId" 
-                type="radio" 
-                value="2" />
+                            <input id="CategoryId"
+                               name="CategoryId"
+                               type="radio"
+                               value="@x" />
+                        </div>
+                        x++;
+                    }
+                }
 
-                Gry: <input 
-                id="CategoryId" 
-                name="CategoryId" 
-                type="radio" 
-                value="3" />
 
-                Sztuka: <input 
-                id="CategoryId" 
-                name="CategoryId" 
-                type="radio" 
-                value="4" />
 
-                Sport: <input 
-                id="CategoryId" 
-                name="CategoryId" 
-                type="radio" 
-                value="5" />
-           
             </div>
-            <div class="form-group">
-               <button class="btn-primary" type="submit">Zapisz</button>
-               </div>
+
+            <div class="form-group p-2 pt-3">
+                <button class="btn-primary ml-3" type="submit">Dodaj</button>
+                <button class="ml-4" asp-action="Index">Powrót</button>
+            </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

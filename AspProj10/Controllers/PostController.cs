@@ -11,7 +11,7 @@ namespace AspProj10.Controllers
 
     public class PostController : Controller
     {
-        
+
         private ICrudPostRepository postRepository;
         private ICrudCategoryRepository categoryRepository;
         private ICrudCommentRepository commentRepository;
@@ -21,15 +21,16 @@ namespace AspProj10.Controllers
             this.categoryRepository = categoryRepository;
             this.commentRepository = commentRepository;
         }
-        
+
         // Post{
         public IActionResult Details(int id)
         {
             ViewModel model = new ViewModel();
             model.post = postRepository.FindById(id);
             model.Comments = (List<Comment>)commentRepository.FindAll();
-           // ViewBag.id = id;
-            return View(model) ;
+            // ViewBag.id = id;
+            return View(model);
+            
         }
         public IActionResult Index()
         {
@@ -37,10 +38,12 @@ namespace AspProj10.Controllers
         }
         public IActionResult AddPost()
         {
+            ViewBag.Kat = categoryRepository.FindAll();
             return View();
         }
         public IActionResult List()
-        {          
+        {
+            ViewBag.CR = categoryRepository;
             return View("List", postRepository.FindAll());
         }
         public IActionResult Like(int id)
@@ -58,8 +61,8 @@ namespace AspProj10.Controllers
         }
         [HttpPost]
         public IActionResult AddP(Post post)
-        {   
-            
+        {
+
             DateTime datenow = DateTime.Now;
             //   if (ModelState.IsValid)
             //   {
@@ -67,22 +70,22 @@ namespace AspProj10.Controllers
             post.DateOfAdd = datenow;
             postRepository.Add(post);
             return View("ConfirmPost", post);
-           //    }
+            //    }
             //   return View();
         }
         [Authorize]
         public IActionResult DeleteP(int id)
         {
-            if (id > 0) 
-            { 
-            postRepository.Delete(id);
-            return View("List", postRepository.FindAll());
+            if (id > 0)
+            {
+                postRepository.Delete(id);
+                return View("List", postRepository.FindAll());
             }
             else
             {
                 return View("List");
             }
-        
+
         }
         [Authorize]
         public IActionResult DeletePost(int id)
@@ -123,8 +126,8 @@ namespace AspProj10.Controllers
             DateTime datenow = DateTime.Now;
             //   if (ModelState.IsValid)
             //   {
-            
-            
+
+
             categoryRepository.Add(category);
             return View("ConfirmCategory", category);
             //    }
@@ -169,7 +172,7 @@ namespace AspProj10.Controllers
             //  comment.PostId = id;
             //   if (ModelState.IsValid)
             //   {
-            
+
             commentRepository.Add(comment);
             return LocalRedirect("/Post/Details/" + comment.PostId);
             //    }
@@ -181,7 +184,7 @@ namespace AspProj10.Controllers
             var com = commentRepository.FindById(id);
             if (id > 0)
             {
-                
+
                 commentRepository.Delete(id);
                 return LocalRedirect("/Post/Details/" + com.PostId);
             }
@@ -191,7 +194,7 @@ namespace AspProj10.Controllers
             }
 
         }
-        
+
 
         // } Comment
 
