@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspProj10.Controllers
 {
+
     public class PostController : Controller
     {
         
@@ -43,14 +45,15 @@ namespace AspProj10.Controllers
         }
         public IActionResult Like(int id)
         {
+            var post = postRepository.FindById(id);
             if (id > 0)
             {
-                postRepository.Like(id);              
-                return View("Details", postRepository.FindById(id)) ;
+                postRepository.Like(id);
+                return LocalRedirect("/Post/Details/" + post.Id); ;
             }
             else
             {
-                return View("Details", postRepository.FindById(id));
+                return LocalRedirect("/Post/Details/" + post.Id); ;
             }
         }
         [HttpPost]
@@ -67,6 +70,7 @@ namespace AspProj10.Controllers
            //    }
             //   return View();
         }
+        [Authorize]
         public IActionResult DeleteP(int id)
         {
             if (id > 0) 
@@ -80,14 +84,17 @@ namespace AspProj10.Controllers
             }
         
         }
+        [Authorize]
         public IActionResult DeletePost(int id)
         {
             return View(postRepository.FindById(id));
         }
+        [Authorize]
         public IActionResult EditPost(int id)
         {
             return View(postRepository.FindById(id));
         }
+        [Authorize]
         public IActionResult EditP(Post editedPost)
         {
             if (ModelState.IsValid)
@@ -100,15 +107,16 @@ namespace AspProj10.Controllers
                 return View("EditPost");
             }
         }
-        
+
         // } Post
 
         // Category{ 
-
+        [Authorize]
         public IActionResult AddCategory()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public IActionResult AddC(Category category)
         {
@@ -122,6 +130,7 @@ namespace AspProj10.Controllers
             //    }
             //   return View();
         }
+        [Authorize]
         public IActionResult DeleteC(int id)
         {
             if (id > 0)
@@ -135,11 +144,12 @@ namespace AspProj10.Controllers
             }
 
         }
-
+        [Authorize]
         public IActionResult CategoryActions()
         {
             return View();
         }
+        [Authorize]
         public IActionResult CatList()
         {
             return View("CatList", categoryRepository.FindAll());
@@ -153,29 +163,31 @@ namespace AspProj10.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddCo(Comment comment, int id)
+        public IActionResult AddCo(Comment comment)
         {
 
             //  comment.PostId = id;
             //   if (ModelState.IsValid)
             //   {
             
-
             commentRepository.Add(comment);
-            return View("Index");
+            return LocalRedirect("/Post/Details/" + comment.PostId);
             //    }
             //   return View();
         }
+        [Authorize]
         public IActionResult DeleteCo(int id)
         {
+            var com = commentRepository.FindById(id);
             if (id > 0)
             {
+                
                 commentRepository.Delete(id);
-                return View("List", postRepository.FindAll());
+                return LocalRedirect("/Post/Details/" + com.PostId);
             }
             else
             {
-                return View("List", postRepository.FindAll());
+                return LocalRedirect("/Post/Details/" + com.PostId);
             }
 
         }

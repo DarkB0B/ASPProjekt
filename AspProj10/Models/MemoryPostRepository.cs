@@ -1,6 +1,6 @@
 ﻿namespace AspProj10.Models
 {
-    public class MemoryPostRepository
+    public class MemoryPostRepository 
     {
     }
 }
