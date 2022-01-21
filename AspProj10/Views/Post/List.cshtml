@@ -24,14 +24,17 @@
                 </td>
                 @{
                     int x = post.CategoryId;
-                    Category cat = ViewBag.CR.FindById(x);                   
-                }        
+                    
+                        Category cat = ViewBag.CR.FindById(x);
+                   
+                        
                 <td>
                   @cat.CategoryName
                 </td>
+                }
+                
                 <td>
-                    <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Edytuj</a>
-                    <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@post.Id">Usuń</a>
+                    
                     <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">Szczegóły</a>
                 </td>
             </tr>

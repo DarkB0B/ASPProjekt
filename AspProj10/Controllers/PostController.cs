@@ -52,11 +52,11 @@ namespace AspProj10.Controllers
             if (id > 0)
             {
                 postRepository.Like(id);
-                return LocalRedirect("/Post/Details/" + post.Id); ;
+                return LocalRedirect("/Post/Details/" + post.Id); 
             }
             else
             {
-                return LocalRedirect("/Post/Details/" + post.Id); ;
+                return LocalRedirect("/Post/Details/" + post.Id); 
             }
         }
         [HttpPost]
@@ -76,6 +76,7 @@ namespace AspProj10.Controllers
         [Authorize]
         public IActionResult DeleteP(int id)
         {
+            ViewBag.CR = categoryRepository;
             if (id > 0)
             {
                 postRepository.Delete(id);
@@ -103,7 +104,7 @@ namespace AspProj10.Controllers
             if (ModelState.IsValid)
             {
                 postRepository.Update(editedPost);
-                return View("List", postRepository.FindAll());
+                return LocalRedirect("/Post/Details/" + editedPost.Id);
             }
             else
             {

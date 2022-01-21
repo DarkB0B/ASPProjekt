@@ -47,6 +47,8 @@ namespace AspProj10
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders();
 
+            services.AddSingleton<BasicAuthorizationFilter>();
+            
 
 
             services.AddControllersWithViews();
@@ -54,6 +56,10 @@ namespace AspProj10
             services.AddMemoryCache();
             services.AddSession();
 
+            services.AddMvc().AddMvcOptions(options =>
+            {
+                options.Filters.AddService<BasicAuthorizationFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,7 +12,7 @@
     <div class="text-lg-left">
        Polubienia: @Model.post.LikeAmmount  
        <div class="text-lg-left">   
-       <a asp-controller="Post" asp-action="Like" asp-route-id="@Model.post.Id">Like</a>
+       <a asp-controller="Post" asp-action="Like" asp-route-id="@Model.post.Id">Like</a> <a asp-controller="Post" asp-action="EditPost" asp-route-id="@Model.post.Id">Edytuj</a> <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@Model.post.Id">Usuń</a>
 
         
     </div>
