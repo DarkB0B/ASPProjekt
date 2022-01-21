@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace AspProj10.Controllers
 {
+    [DisableBasicAuthentication]
+
     public class AccountController : Controller
     {
         private UserManager<IdentityUser> _userManager;

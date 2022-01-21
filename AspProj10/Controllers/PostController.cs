@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AspProj10.Controllers
 {
+    [DisableBasicAuthentication]
 
     public class PostController : Controller
     {

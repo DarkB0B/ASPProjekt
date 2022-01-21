@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspProj10.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20220115100402_aaaaa")]
-    partial class aaaaa
+    [Migration("20220121134941_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

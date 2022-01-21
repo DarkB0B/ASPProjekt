@@ -16,7 +16,7 @@ namespace AspProj10.Models
         private const string Realm = "App Realm";
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (context.Filters.OfType<DisableBasicAuthentication>().Any())
+            if(context.Filters.OfType<DisableBasicAuthentication>().Any())
             {
                 return;
             }
