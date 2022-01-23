@@ -6,90 +6,71 @@ using System.Collections.Generic;
 using AspProj10.Models;
 using Microsoft.AspNetCore.Http;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-/*
+
 namespace AspProj10.Controllers
 {
-    [Route("api/posts")]
+    [Route("api/Posts")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-    
+
     public class ApiPostController : ControllerBase
     {
         private ICrudPostRepository postRepository;
-        private ICrudCategoryRepository categoryRepository;
-        
-        public ApiPostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository)
+
+
+        public ApiPostController(ICrudPostRepository postRepository)
         {
             this.postRepository = postRepository;
-            this.categoryRepository = categoryRepository;
-        }
-
-             
-        public IActionResult AddPost()
-        {
-            Kat = categoryRepository.FindAll();
-            return View();
-        }
-        public IActionResult List()
-        {
-            ViewBag.CR = categoryRepository;
-            return View("List", postRepository.FindAll());
-        }
-       
-        [HttpPost]
-        public IActionResult AddP(Post post)
-        {
-
-            DateTime datenow = DateTime.Now;
-            //   if (ModelState.IsValid)
-            //   {
-            post.LikeAmmount = 0;
-            post.DateOfAdd = datenow;
-            postRepository.Add(post);
-            return View("ConfirmPost", post);
-            //    }
-            //   return View();
-        }
-  
-        public IActionResult DeleteP(int id)
-        {
-            ViewBag.CR = categoryRepository;
-            if (id > 0)
-            {
-                postRepository.Delete(id);
-                return View("List", postRepository.FindAll());
-            }
-            else
-            {
-                return View("List");
-            }
 
         }
-      
-        public IActionResult DeletePost(int id)
-        {
-            return View(postRepository.FindById(id));
-        }
-       
-        public IActionResult EditPost(int id)
-        {
-            return View(postRepository.FindById(id));
-        }
-        
-        public IActionResult EditP(Post editedPost)
+
+        [HttpDelete]
+        [Route("{id?}")]
+        public IActionResult Delete(int id)
         {
             if (ModelState.IsValid)
             {
-                postRepository.Update(editedPost);
-                return LocalRedirect("/Post/Details/" + editedPost.Id);
+                postRepository.Delete(id);
+                return Ok();
             }
             else
             {
-                return View("EditPost");
+                return BadRequest();
             }
+        }
+        [HttpPost]
+        public IActionResult Add([FromBody] Post post)
+        {
+            if (ModelState.IsValid)
+            {
+                Post post1 = postRepository.Add(post);
+                return new CreatedResult($"/api/Posts/{post1.Id}", post);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet]
+        [Route("{id?}")]
+        public IActionResult Get(int id)
+        {
+            Post post = postRepository.FindById(id);
+            if (post != null)
+            {
+                return new OkObjectResult(post);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpGet]
+        public List<Post> GetAll()
+        {
+            return postRepository.FindAll().ToList();
         }
 
     }
 }
-*/

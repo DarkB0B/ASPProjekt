@@ -77,7 +77,6 @@ namespace AspProj10
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseStaticFiles();
             app.UseRouting();
@@ -86,11 +85,14 @@ namespace AspProj10
             app.UseAuthorization();
 
 
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
             IdentitySeedData.EnsurePopulated(app);
         }

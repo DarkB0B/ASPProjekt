@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AspProj10.Controllers
 {
     [DisableBasicAuthentication]
-
+    [Authorize]
     public class AccountController : Controller
     {
         private UserManager<IdentityUser> _userManager;
@@ -28,26 +28,23 @@ namespace AspProj10.Controllers
             });
         }
         [AllowAnonymous]
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = await
-               _userManager.FindByNameAsync(loginModel.Name);
+                IdentityUser user = await _userManager.FindByNameAsync(loginModel.Name);
                 if (user != null)
                 {
                     await _signInManager.SignOutAsync();
                     if ((await _signInManager.PasswordSignInAsync(user,
                     loginModel.Password, false, false)).Succeeded) ;
                     {
-                        return Redirect(loginModel?.ReturnUrl ??
-                       "/Admin/Index");
+                        return Redirect(loginModel?.ReturnUrl ?? "/Post");
                     }
                 }
             }
-            ModelState.AddModelError("", "Nieprawidłowa nazwa użytkownika lub hasło");
+            ModelState.AddModelError("WrongUser", "Nieprawidłowa nazwa użytkownika lub hasło");
                  return View(loginModel);
         }
         public async Task<RedirectResult> Logout(string returnUrl = "/")
