@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AspProj10.Migrations.ApplicationDb
+namespace AspProj10.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220121134952_mig2")]
-    partial class mig2
+    [Migration("20220124183008_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

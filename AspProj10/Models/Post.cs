@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Web;
 namespace AspProj10.Models
 {
     public class Post
@@ -12,6 +14,7 @@ namespace AspProj10.Models
         public Category Category { get; set; }
         public ICollection<Comment> Comments { get; set;}
         public int CategoryId { get; set; }       
+       
         public Post()
         {
 

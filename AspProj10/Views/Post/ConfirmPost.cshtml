@@ -4,5 +4,9 @@
 *@
 @{
 }
-<h2>Dodałeś Posta</h2>
-<h3>Tytuł Posta: @Model.Title</h3>
+<h2>Pomyślnie dodano post o tytule:</h2>
+<h3 class="border-bottom">@Model.Title</h3>
+
+<div>
+<a class="nav-link " asp-area="" asp-controller="Post" asp-action="List">POWRÓT DO LISTY POSTÓW</a>
+</div>

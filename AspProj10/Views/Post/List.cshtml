@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<Post>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+  
+<h1>Lista Postów</h1> 
 
-
-<h1>Lista Postów</h1>
 <table class="table">
     <thead>
         <tr>
@@ -11,6 +13,10 @@
             <th>
                 Kategoria:
             </th>
+            <th>
+                <a asp-action="AddPost" asp-controller="Post">Dodaj nowy post</a>
+            </th>
+            
 
         </tr>
     </thead>
@@ -36,7 +42,15 @@
                 <td>
                     
                     <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">Szczegóły</a>
-                </td>
+                
+                 @if (signInManager.IsSignedIn(User))
+            {
+                
+                <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Edytuj</a>
+                <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@post.Id">Usuń</a>
+                
+            }
+            </td>
             </tr>
         }
     </tbody>

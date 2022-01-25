@@ -1,25 +1,37 @@
 ﻿@model ViewModel
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
 <div class="text-center">
-    
-    
-    <div class="text-uppercase">
-      
-        <h1>@Model.post.Title </h1>
-   </div>
-    <div>
-       @Model.post.Description
-    </div>
-    <div class="text-lg-left">
-       Polubienia: @Model.post.LikeAmmount  
-       <div class="text-lg-left">   
-       <a asp-controller="Post" asp-action="Like" asp-route-id="@Model.post.Id">Like</a> <a asp-controller="Post" asp-action="EditPost" asp-route-id="@Model.post.Id">Edytuj</a> <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@Model.post.Id">Usuń</a>
 
-        
+
+    <div class="text-uppercase">
+
+        <h1>@Model.post.Title </h1>
     </div>
+    <div class="pb-5 pt-4">
+        @Model.post.Description
     </div>
+
+
+
+
     
-           
+    <div class="text-lg-left pt-5">
+        Polubienia: @Model.post.LikeAmmount
+        <span class="float-lg-right">Data Dodania:<br> @Model.post.DateOfAdd</span>
+        <div class="text-lg-left">
+
+            <a asp-controller="Post" asp-action="Like" asp-route-id="@Model.post.Id">Like</a>
+            @if (signInManager.IsSignedIn(User))
+            {
+                <a asp-controller="Post" asp-action="EditPost" asp-route-id="@Model.post.Id">Edytuj</a>
+                <a asp-controller="Post" asp-action="DeleteP" asp-route-id="@Model.post.Id">Usuń</a>
+            }
+        </div>
+    </div>
+
 </div>
+
 
 
 
@@ -28,32 +40,35 @@
     <thead>
         <tr>
             <th>
-                Komentarze: 
+                Komentarze:
             </th>
             <th>
             </th>
-            <th class="text-lg-ight">
+            <th class="text-lg-right">
                 <a asp-controller="Post" asp-action="AddComment" asp-route-id="@Model.post.Id">Dodaj Komentarz</a>
             </th>
-            
+
         </tr>
     </thead>
     <tbody>
-       @foreach (Comment comment in Model.Comments)     
-    {
-            if (comment.PostId == @Model.post.Id) 
+        @foreach (Comment comment in Model.Comments)
+        {
+            if (comment.PostId == @Model.post.Id)
             {
                 <tr>
-                    <td>@comment.Commentt</td>
+                    <td>@comment.Commentt   @if (signInManager.IsSignedIn(User))
+                        {
+                            <a class="float-lg-right" asp-controller="Post" asp-action="DeleteCo" asp-route-id="@comment.Id">Usuń</a>
+                        }
+                    </td>
 
-                 </tr>
-                 <td>
-                     <a asp-controller="Post" asp-action="DeleteCo" asp-route-id="@comment.Id">Usuń</a>
-                 </td>
+                </tr>
+
             }
-    }
-            
-        
-        
+        }
+
+
+
     </tbody>
 </table>
+
