@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace AspProj10.Controllers
 {
@@ -16,11 +18,14 @@ namespace AspProj10.Controllers
         private ICrudPostRepository postRepository;
         private ICrudCategoryRepository categoryRepository;
         private ICrudCommentRepository commentRepository;
-        public PostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository, ICrudCommentRepository commentRepository)
+        private readonly IWebHostEnvironment hostEnvironment;
+
+        public PostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository, ICrudCommentRepository commentRepository, IWebHostEnvironment hostEnvironment)
         {
             this.postRepository = postRepository;
             this.categoryRepository = categoryRepository;
             this.commentRepository = commentRepository;
+            this.hostEnvironment = hostEnvironment;
         }
 
         // Post{
@@ -61,8 +66,19 @@ namespace AspProj10.Controllers
             }
         }
         [HttpPost]
-        public IActionResult AddP(Post post)
+        public async Task<IActionResult> AddP([Bind("Id,Title,ImageFile,CategoryId,Description")]Post post)
         {
+            //zapisz zdjęcie do www.root/image{
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+            string extension = Path.GetExtension(post.ImageFile.FileName);
+            post.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+            string path = Path.Combine(wwwRootPath + "/Image", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await post.ImageFile.CopyToAsync(fileStream);
+            }           
+            // }
 
             DateTime datenow = DateTime.Now;
             //   if (ModelState.IsValid)
@@ -70,13 +86,22 @@ namespace AspProj10.Controllers
             post.LikeAmmount = 0;
             post.DateOfAdd = datenow;
             postRepository.Add(post);
-            return View("ConfirmPost", post);
+            return RedirectToAction("List");
             //    }
             //   return View();
         }
         [Authorize]
         public IActionResult DeleteP(int id)
         {
+            var post = postRepository.FindById(id);
+            //usuń zdjęcie z folderu{
+
+            var imagePath = Path.Combine(hostEnvironment.WebRootPath, "image", post.ImageName);
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+            // }
             ViewBag.CR = categoryRepository;
             if (id > 0)
             {

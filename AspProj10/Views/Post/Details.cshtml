@@ -8,15 +8,18 @@
 
         <h1>@Model.post.Title </h1>
     </div>
-    <div class="pb-5 pt-4">
+    
+    <div>
+        <img src="@("~/image/" + Model.post.ImageName)" asp-append-version="true" width="400px" height="400px"/>
+    </div>
+    <div class="pb-5 pt-4 h4">
         @Model.post.Description
     </div>
 
 
 
-
     
-    <div class="text-lg-left pt-5">
+    <div class="text-lg-left pt-5 h5">
         Polubienia: @Model.post.LikeAmmount
         <span class="float-lg-right">Data Dodania:<br> @Model.post.DateOfAdd</span>
         <div class="text-lg-left">
