@@ -20,7 +20,7 @@ namespace AspProj10.Models
 
             IList<Category> FindAll();
 
-            IList<Category> FindPage(int page, int size);
+            
         }
         public class EFCrudCategoryRepository : ICrudCategoryRepository
     {
@@ -66,10 +66,7 @@ namespace AspProj10.Models
             
 
                
-            public IList<Category> FindPage(int page, int size)
-            {
-                return (from category in _context.Categories orderby category.CategoryName select category).Skip(page * size).Take(size).ToList();
-            }
+            
         }
     }
 

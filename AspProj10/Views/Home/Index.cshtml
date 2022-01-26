@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,8 +11,10 @@
 <li class="border">
     <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="List">Lista Postów</a>
 </li>
+@if (signInManager.IsSignedIn(User))
+            {
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="CategoryActions">Kategorie (Admin Only)</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="CategoryActions">Kategorie</a>
 </li>
 
-                           
+            }                

@@ -3,10 +3,10 @@ using Xunit;
 
 namespace PostTest
 {
-    public class UnitTest1
+    public class PostTest
     {
         [Fact]
-        public void Test1()
+        public void testAdd()
         {
 
         }

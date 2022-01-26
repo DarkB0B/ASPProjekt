@@ -18,7 +18,7 @@ namespace AspProj10.Models
 
         IList<Post> FindAll();
 
-        IList<Post> FindPage(int page, int size);
+        
     }
    public class EFCrudPostRepository : ICrudPostRepository
     {
@@ -68,9 +68,6 @@ namespace AspProj10.Models
         {
             return _context.Posts.Find(id);
         }
-        public IList<Post> FindPage(int page, int size)
-        {
-            return (from post in _context.Posts orderby post.Title select post).Skip(page * size).Take(size).ToList();
-        }
+        
     }
 }
