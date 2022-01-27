@@ -20,6 +20,7 @@ namespace AspProjTest
     }
     public class UnitTest1
     {
+        // Post Controller{
         [Fact]
         public void AddComment()
         {
@@ -109,7 +110,7 @@ namespace AspProjTest
             ICrudRepository Repository = new MemoryPostRepository();
             IWebHostEnvironment hostEnvironment = new webhost();
             PostController controller = new PostController(Repository, hostEnvironment);
-            
+
             var post = Repository.FindByIdP(1);
 
             Assert.NotNull(post);
@@ -139,6 +140,32 @@ namespace AspProjTest
             Assert.NotNull(cat);
 
         }
+        //}
+        // Api Tests{
+        [Fact]
+        public void AddPApi()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();           
+            ApiPostController controller = new ApiPostController(Repository);
 
+            var post = new Post() { Title = "Titel", Description = "Desc", CategoryId = '1', LikeAmmount = '0' };
+            controller.Add(post);           
+            Assert.NotNull(post);
+
+        }
+        [Fact]
+        public void DeletePApi()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();
+            ApiPostController controller = new ApiPostController(Repository);
+
+           
+            controller.Delete(1);
+            var post = Repository.FindByIdP(1);
+            Assert.Null(post);
+
+        }
+        
+        //}
     }
 }
