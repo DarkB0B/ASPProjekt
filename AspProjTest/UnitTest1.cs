@@ -23,13 +23,25 @@ namespace AspProjTest
         [Fact]
         public void AddComment()
         {
-            ICrudRepository Repository  = new MemoryPostRepository();
+            ICrudRepository Repository = new MemoryPostRepository();
             IWebHostEnvironment hostEnvironment = new webhost();
             PostController controller = new PostController(Repository, hostEnvironment);
-            var comment = new Comment() { Commentt="Commenttttttttttttt", PostId='1'};
+            var comment = new Comment() { Commentt = "Com1", PostId = '1' };
             controller.AddCo(comment);
             comment.Id = 2;
             Assert.Equal<Comment>(comment, Repository.FindByIdCo(2));
+
+        }
+        [Fact]
+        public void AddPost()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();
+            IWebHostEnvironment hostEnvironment = new webhost();
+            PostController controller = new PostController(Repository, hostEnvironment);
+            var post = new Post() { Title = "Titel", Description = "Desc", CategoryId = '1', LikeAmmount = '0' };
+            controller.AddP(post);
+            post.Id = 2;
+            Assert.Equal<Post>(post, Repository.FindByIdP(2));
 
         }
         [Fact]
@@ -38,7 +50,7 @@ namespace AspProjTest
             ICrudRepository Repository = new MemoryPostRepository();
             IWebHostEnvironment hostEnvironment = new webhost();
             PostController controller = new PostController(Repository, hostEnvironment);
-            var category = new Category() { CategoryName = "Commenttttttttttttt"};
+            var category = new Category() { CategoryName = "Cat1" };
             controller.AddC(category);
             category.Id = 2;
             Assert.Equal<Category>(category, Repository.FindByIdC(2));
@@ -56,6 +68,17 @@ namespace AspProjTest
 
         }
         [Fact]
+        public void DeletePost()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();
+            IWebHostEnvironment hostEnvironment = new webhost();
+            PostController controller = new PostController(Repository, hostEnvironment);
+
+            controller.DeleteP(1);
+            Assert.Null(Repository.FindByIdP(1));
+
+        }
+        [Fact]
         public void DeleteComment()
         {
             ICrudRepository Repository = new MemoryPostRepository();
@@ -66,11 +89,56 @@ namespace AspProjTest
             Assert.Null(Repository.FindByIdCo(1));
 
         }
+
         [Fact]
-        public void IsNullNull()
+        public void LikePost()
         {
-            Assert.Null(null);
+            ICrudRepository Repository = new MemoryPostRepository();
+            IWebHostEnvironment hostEnvironment = new webhost();
+            PostController controller = new PostController(Repository, hostEnvironment);
+            var post = new Post() { Title = "Titel", Description = "Desc", CategoryId = '1', LikeAmmount = '0' };
+            controller.AddP(post);
+            post.Id = 2;
+            Repository.LikeP(2);
+
+            Assert.Equal<int>(1, post.LikeAmmount);
         }
-        
+        [Fact]
+        public void FindByIdPost()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();
+            IWebHostEnvironment hostEnvironment = new webhost();
+            PostController controller = new PostController(Repository, hostEnvironment);
+            
+            var post = Repository.FindByIdP(1);
+
+            Assert.NotNull(post);
+
+        }
+        [Fact]
+        public void FindByIdComment()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();
+            IWebHostEnvironment hostEnvironment = new webhost();
+            PostController controller = new PostController(Repository, hostEnvironment);
+
+            var com = Repository.FindByIdC(1);
+
+            Assert.NotNull(com);
+
+        }
+        [Fact]
+        public void FindByIdCategory()
+        {
+            ICrudRepository Repository = new MemoryPostRepository();
+            IWebHostEnvironment hostEnvironment = new webhost();
+            PostController controller = new PostController(Repository, hostEnvironment);
+
+            var cat = Repository.FindByIdCo(1);
+
+            Assert.NotNull(cat);
+
+        }
+
     }
 }

@@ -34,6 +34,10 @@ namespace AspProj10.Controllers
             return View(model);
 
         }
+        public IActionResult SomethingWenWrong()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
@@ -66,15 +70,18 @@ namespace AspProj10.Controllers
         {
             if (ModelState.IsValid)
             {
-                //zapisz zdjęcie do www.root/image{
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
-                string extension = Path.GetExtension(post.ImageFile.FileName);
-                post.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
-                string path = Path.Combine(wwwRootPath + "/Image", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                if (post.ImageFile != null)
                 {
-                    post.ImageFile.CopyTo(fileStream);
+                    //zapisz zdjęcie do www.root/image{
+                    string wwwRootPath = hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+                    string extension = Path.GetExtension(post.ImageFile.FileName);
+                    post.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Image", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        post.ImageFile.CopyTo(fileStream);
+                    }
                 }
                 // }
 
@@ -87,22 +94,25 @@ namespace AspProj10.Controllers
             }
             else
             {
-                return RedirectToAction("List");
+                return View("SomethingWentWrong");
             }
             //   return View();
         }
         [Authorize]
         public IActionResult DeleteP(int id)
         {
+            
             var post = _repository.FindByIdP(id);
-            //usuń zdjęcie z folderu{
-
-            var imagePath = Path.Combine(hostEnvironment.WebRootPath, "image", post.ImageName);
-            if (System.IO.File.Exists(imagePath))
+            if (post.ImageName != null)
             {
-                System.IO.File.Delete(imagePath);
+                //usuń zdjęcie z folderu{
+                var imagePath = Path.Combine(hostEnvironment.WebRootPath, "image", post.ImageName);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+                // }
             }
-            // }
             ViewBag.CR = _repository;
             if (id > 0)
             {
