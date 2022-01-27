@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspProj10.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220126174425_mig1")]
+    [Migration("20220127121149_mig1")]
     partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,7 @@ namespace AspProj10.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
