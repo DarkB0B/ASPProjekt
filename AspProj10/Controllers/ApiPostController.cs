@@ -31,7 +31,7 @@ namespace AspProj10.Controllers
         {
             if (ModelState.IsValid)
             {
-                postRepository.Delete(id);
+                postRepository.DeleteP(id);
                 return Ok();
             }
             else
@@ -44,7 +44,7 @@ namespace AspProj10.Controllers
         {
             if (ModelState.IsValid)
             {
-                Post post1 = postRepository.Add(post);
+                Post post1 = postRepository.AddP(post);
                 return new CreatedResult($"/api/Posts/{post1.Id}", post);
             }
             else
@@ -56,7 +56,7 @@ namespace AspProj10.Controllers
         [Route("{id?}")]
         public IActionResult Get(int id)
         {
-            Post post = postRepository.FindById(id);
+            Post post = postRepository.FindByIdP(id);
             if (post != null)
             {
                 return new OkObjectResult(post);
@@ -69,7 +69,7 @@ namespace AspProj10.Controllers
         [HttpGet]
         public List<Post> GetAll()
         {
-            return postRepository.FindAll().ToList();
+            return postRepository.FindAllP().ToList();
         }
 
     }

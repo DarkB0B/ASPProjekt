@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AspProj10.Models
 {
-    public class MemoryPostRepository : ICrudPostRepository
+    public class MemoryPostRepository : ICrudRepository
 
     {
         private Dictionary<int, Post> Posts = new Dictionary<int, Post>();
@@ -17,24 +17,22 @@ namespace AspProj10.Models
         public MemoryPostRepository()
         {
             Category category = new Category() { CategoryName = "Sport" };
-            this.Add(category);
+            this.AddC(category);
             Post post = new Post()
             {
-                Title = "Title1",
+                Title = "Titel1",
                 Description = "Description1",
                 DateOfAdd = DateTime.Now,
                 CategoryId = category.Id,
                 LikeAmmount = 0,
-                ImageName = "nonexistant",
+                
             };
-            this.Add(post);
-            this.AddPostToCategory(post.Id, category.Id);
+            this.AddP(post);           
             Comment comment = new Comment() { Commentt = "Comment1", PostId = post.Id};
-            this.Add(comment);
-            this.AddCommentToPost(comment.Id, post.Id);
+            this.AddCo(comment);           
         }
 
-        private Category Add(Category category)
+        public Category AddC(Category category)
         {
             ++CategoryIndex;
             category.Id = CategoryIndex;
@@ -42,14 +40,14 @@ namespace AspProj10.Models
             return category;
         }
 
-        public Post Add(Post post)
+        public Post AddP(Post post)
         {
             ++PostIndex;
             post.Id = PostIndex;
             Posts.Add(post.Id, post);
             return post;
         }
-        public Comment Add(Comment comment)
+        public Comment AddCo(Comment comment)
         {
             ++CommentIndex;
             comment.Id = CommentIndex;
@@ -57,19 +55,8 @@ namespace AspProj10.Models
             return comment;
 
         }
-        public void AddCommentToPost(int CommentId, int PostId)
-        {
-            Posts.TryGetValue(PostId, out Post post);
-            Comments.TryGetValue(CommentId, out Comment comment);
-            post.Comments.Add(comment);
-        }
-        public void AddPostToCategory(int PostId, int CategoryId)
-        {
-            Posts.TryGetValue(PostId, out Post post);
-            Categories.TryGetValue(CategoryId, out Category category);
-            category.Posts.Add(post);
-        }
-        public void Delete(int id)
+        
+        public void DeleteP(int id)
         {
             Posts.Remove(id);
         }
@@ -81,7 +68,7 @@ namespace AspProj10.Models
         {
             Comments.Remove(id);
         }
-        public IList<Post> FindAll()
+        public IList<Post> FindAllP()
         {
             return Posts.Values.ToList();
         }       
@@ -90,7 +77,7 @@ namespace AspProj10.Models
             return Categories.Values.ToList();
         }
 
-        public Post FindById(int id)
+        public Post FindByIdP(int id)
         {
             Posts.TryGetValue(id, out Post post);
             return post;
@@ -103,7 +90,7 @@ namespace AspProj10.Models
 
        
 
-        public Post Update(Post post)
+        public Post UpdateP(Post post)
         {
             int id = post.Id;
             if (!Posts.ContainsKey(id))
@@ -113,20 +100,56 @@ namespace AspProj10.Models
             Posts.Remove(id);
             post.Id = id;
             Posts.Add(id, post);
-            return FindById(id);
+            return FindByIdP(id);
         }
 
         
 
-        public void Like(int id)
+        public void LikeP(int id)
         {
             Posts.TryGetValue(id, out Post post);
             post.LikeAmmount += 1;
         }
 
-        
+        public Comment UpdateCo(Comment comment)
+        {
+            int id = comment.Id;
+            if (!Comments.ContainsKey(id))
+            {
+                return null;
+            }
+            Comments.Remove(id);
+            comment.Id = id;
+            Comments.Add(id, comment);
+            return FindByIdCo(id);
+        }
 
-        
+        public Comment FindByIdCo(int id)
+        {
+            Comments.TryGetValue(id, out Comment comment);
+            return comment;
+        }
+
+        public IList<Comment> FindAllCo()
+        {
+            return Comments.Values.ToList();
+        }
+
+       
+      
+
+        public Category UpdateC(Category category)
+        {
+            int id = category.Id;
+            if (!Categories.ContainsKey(id))
+            {
+                return null;
+            }
+            Categories.Remove(id);
+            category.Id = id;
+            Categories.Add(id, category);
+            return FindByIdC(id);
+        }
     }
 
 }

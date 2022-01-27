@@ -15,16 +15,12 @@ namespace AspProj10.Controllers
     public class PostController : Controller
     {
 
-        private ICrudPostRepository postRepository;
-        private ICrudCategoryRepository categoryRepository;
-        private ICrudCommentRepository commentRepository;
+        private ICrudRepository _repository;
         private readonly IWebHostEnvironment hostEnvironment;
 
-        public PostController(ICrudPostRepository postRepository, ICrudCategoryRepository categoryRepository, ICrudCommentRepository commentRepository, IWebHostEnvironment hostEnvironment)
+        public PostController(ICrudRepository _repository, IWebHostEnvironment hostEnvironment)
         {
-            this.postRepository = postRepository;
-            this.categoryRepository = categoryRepository;
-            this.commentRepository = commentRepository;
+            this._repository = _repository;
             this.hostEnvironment = hostEnvironment;
         }
 
@@ -32,11 +28,11 @@ namespace AspProj10.Controllers
         public IActionResult Details(int id)
         {
             ViewModel model = new ViewModel();
-            model.post = postRepository.FindById(id);
-            model.Comments = (List<Comment>)commentRepository.FindAll();
+            model.post = _repository.FindByIdP(id);
+            model.Comments = (List<Comment>)_repository.FindAllCo();
             // ViewBag.id = id;
             return View(model);
-            
+
         }
         public IActionResult Index()
         {
@@ -44,56 +40,61 @@ namespace AspProj10.Controllers
         }
         public IActionResult AddPost()
         {
-            ViewBag.Kat = categoryRepository.FindAll();
+            ViewBag.Kat = _repository.FindAllC();
             return View();
         }
         public IActionResult List()
         {
-            ViewBag.CR = categoryRepository;
-            return View("List", postRepository.FindAll());
+            ViewBag.CR = _repository;
+            return View("List", _repository.FindAllP());
         }
         public IActionResult Like(int id)
         {
-            var post = postRepository.FindById(id);
+            var post = _repository.FindByIdP(id);
             if (id > 0)
             {
-                postRepository.Like(id);
-                return LocalRedirect("/Post/Details/" + post.Id); 
+                _repository.LikeP(id);
+                return LocalRedirect("/Post/Details/" + post.Id);
             }
             else
             {
-                return LocalRedirect("/Post/Details/" + post.Id); 
+                return LocalRedirect("/Post/Details/" + post.Id);
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AddP([Bind("Id,Title,ImageFile,CategoryId,Description")]Post post)
+        public IActionResult AddP(Post post)
         {
-            //zapisz zdjęcie do www.root/image{
-            string wwwRootPath = hostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
-            string extension = Path.GetExtension(post.ImageFile.FileName);
-            post.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
-            string path = Path.Combine(wwwRootPath + "/Image", fileName);
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            if (ModelState.IsValid)
             {
-                await post.ImageFile.CopyToAsync(fileStream);
-            }           
-            // }
+                //zapisz zdjęcie do www.root/image{
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+                string extension = Path.GetExtension(post.ImageFile.FileName);
+                post.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+                string path = Path.Combine(wwwRootPath + "/Image", fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    post.ImageFile.CopyTo(fileStream);
+                }
+                // }
 
-            DateTime datenow = DateTime.Now;
-            //   if (ModelState.IsValid)
-            //   {
-            post.LikeAmmount = 0;
-            post.DateOfAdd = datenow;
-            postRepository.Add(post);
-            return RedirectToAction("List");
-            //    }
+                DateTime datenow = DateTime.Now;
+
+                post.LikeAmmount = 0;
+                post.DateOfAdd = datenow;
+                _repository.AddP(post);
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("List");
+            }
             //   return View();
         }
         [Authorize]
         public IActionResult DeleteP(int id)
         {
-            var post = postRepository.FindById(id);
+            var post = _repository.FindByIdP(id);
             //usuń zdjęcie z folderu{
 
             var imagePath = Path.Combine(hostEnvironment.WebRootPath, "image", post.ImageName);
@@ -102,11 +103,11 @@ namespace AspProj10.Controllers
                 System.IO.File.Delete(imagePath);
             }
             // }
-            ViewBag.CR = categoryRepository;
+            ViewBag.CR = _repository;
             if (id > 0)
             {
-                postRepository.Delete(id);
-                return View("List", postRepository.FindAll());
+                _repository.DeleteP(id);
+                return View("List", _repository.FindAllP());
             }
             else
             {
@@ -117,19 +118,19 @@ namespace AspProj10.Controllers
         [Authorize]
         public IActionResult DeletePost(int id)
         {
-            return View(postRepository.FindById(id));
+            return View(_repository.FindByIdP(id));
         }
         [Authorize]
         public IActionResult EditPost(int id)
         {
-            return View(postRepository.FindById(id));
+            return View(_repository.FindByIdP(id));
         }
         [Authorize]
         public IActionResult EditP(Post editedPost)
         {
             if (ModelState.IsValid)
             {
-                postRepository.Update(editedPost);
+                _repository.UpdateP(editedPost);
                 return LocalRedirect("/Post/Details/" + editedPost.Id);
             }
             else
@@ -155,7 +156,7 @@ namespace AspProj10.Controllers
             //   {
 
 
-            categoryRepository.Add(category);
+            _repository.AddC(category);
             return View("ConfirmCategory", category);
             //    }
             //   return View();
@@ -165,8 +166,8 @@ namespace AspProj10.Controllers
         {
             if (id > 0)
             {
-                categoryRepository.Delete(id);
-                return View("CatList", categoryRepository.FindAll());
+                _repository.DeleteC(id);
+                return View("CatList", _repository.FindAllC());
             }
             else
             {
@@ -182,7 +183,7 @@ namespace AspProj10.Controllers
         [Authorize]
         public IActionResult CatList()
         {
-            return View("CatList", categoryRepository.FindAll());
+            return View("CatList", _repository.FindAllC());
         }
         // } Category
         // Comment{
@@ -200,7 +201,7 @@ namespace AspProj10.Controllers
             //   if (ModelState.IsValid)
             //   {
 
-            commentRepository.Add(comment);
+            _repository.AddCo(comment);
             return LocalRedirect("/Post/Details/" + comment.PostId);
             //    }
             //   return View();
@@ -208,11 +209,11 @@ namespace AspProj10.Controllers
         [Authorize]
         public IActionResult DeleteCo(int id)
         {
-            var com = commentRepository.FindById(id);
+            var com = _repository.FindByIdCo(id);
             if (id > 0)
             {
 
-                commentRepository.Delete(id);
+                _repository.DeleteCo(id);
                 return LocalRedirect("/Post/Details/" + com.PostId);
             }
             else

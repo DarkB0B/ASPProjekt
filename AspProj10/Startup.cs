@@ -33,14 +33,10 @@ namespace AspProj10
             // services.AddTransient<IPostRepository, EFPostRepository>();
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
-            services.AddTransient<ICrudPostRepository, EFCrudPostRepository>();
+            services.AddTransient<ICrudRepository, EFCrudRepository>();
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
-            services.AddTransient<ICrudCategoryRepository, EFCrudCategoryRepository>();
-            services.AddTransient<ICrudCommentRepository, EFCrudCommentRepository>();
-            services.AddDbContext<ApplicationDbContext>(options =>
-             options.UseSqlServer(Configuration["Data:Posts:ConnectionString"]));
-            services.AddTransient<ICrudCommentRepository, EFCrudCommentRepository>();
+            
             services.AddDbContext<AppIdentityDbContext>(options =>
              options.UseSqlServer(Configuration["Data:AppIdentity:ConnectionString"]));
             services.AddIdentity<IdentityUser, IdentityRole>()
